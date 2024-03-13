@@ -9,11 +9,9 @@ import {
 } from "@mantine/core";
 
 import { useChatStore } from "@/stores/ChatStore";
-import { IconEdit, IconRepeat, IconSettings, IconX } from "@tabler/icons-react";
+import { IconEdit, IconRepeat, IconSettings, IconX, IconUser, IconRobot } from "@tabler/icons-react";
 import MessageDisplay from "./MessageDisplay";
 
-import UserIcon from "./UserIcon";
-import AssistantIcon from "./AssistantIcon";
 import { Message } from "@/stores/Message";
 import {
   delMessage,
@@ -52,9 +50,6 @@ const useStyles = createStyles((theme: MantineTheme) => ({
     [`&:hover .${getStylesRef("button")}`]: {
       opacity: 1,
     },
-    borderTop: `1px solid ${
-      theme.colorScheme === "dark" ? theme.colors.dark[6] : theme.colors.gray[3]
-    }`,
   },
   message: {
     borderRadius: theme.radius.sm,
@@ -63,22 +58,22 @@ const useStyles = createStyles((theme: MantineTheme) => ({
     marginTop: theme.spacing.md,
     marginBottom: theme.spacing.md,
     display: "inline-block",
-    maxWidth: "800px",
+    maxWidth: "var(--max-width)",
     wordWrap: "break-word",
-    fontSize: theme.fontSizes.sm,
+    fontSize: theme.fontSizes.md,
     width: "100%",
   },
   userMessageContainer: {
     backgroundColor:
       theme.colorScheme === "dark"
         ? theme.colors.dark[8]
-        : theme.colors.gray[1],
+        : theme.colors.gray[0],
   },
   botMessageContainer: {
     backgroundColor:
       theme.colorScheme === "dark"
         ? theme.colors.dark[7]
-        : theme.colors.gray[2],
+        : theme.colors.gray[0],
   },
   userMessage: {
     // All children that are textarea should have color white
@@ -178,13 +173,13 @@ export default function ChatDisplay({ message }: { message: Message }) {
           >
             <MediaQuery smallerThan="md" styles={{ display: "none" }}>
               <div className={classes.topOfMessage}>
-                <Avatar size="sm">
+                <Avatar color={message.role === "assistant" ? "blue" : "orange"} size="sm">
                   {message.role === "system" ? (
                     <IconSettings />
                   ) : message.role === "assistant" ? (
-                    <AssistantIcon width={px("1.5rem")} height={px("1.5rem")} />
+                    <IconRobot width={px("1.5rem")} height={px("1.5rem")} />
                   ) : (
-                    <UserIcon width={px("1.5rem")} height={px("1.5rem")} />
+                    <IconUser width={px("1.5rem")} height={px("1.5rem")} />
                   )}
                 </Avatar>
               </div>

@@ -17,7 +17,7 @@ const useStyles = createStyles((theme) => ({
     backgroundColor:
       theme.colorScheme === "dark"
         ? theme.colors.dark[6]
-        : theme.colors.gray[0],
+        : theme.colors.white[0],
 
     [`&:hover .${getStylesRef("image")}`]: {
       transform: "scale(1.03)",
