@@ -99,24 +99,37 @@ const useStyles = createStyles((theme: MantineTheme) => ({
     },
   },
   loading: {
-    [`p:last-child::after`]: {
-      content: '"▎"',
-      display: "inline-block",
+    [`span.caret`]: {
       color:
         theme.colorScheme === "dark"
-          ? theme.colors.dark[3]
-          : theme.colors.gray[5],
+          ? theme.colors.dark[2]
+          : theme.colors.gray[6],
       animation: `${blink} 1s infinite`,
     },
   },
 }));
+
 export default ({ message, className }: Props) => {
   const { classes, cx } = useStyles();
 
   const renderMessage = () => {
     const codeTags = (message.content.match(/```/g) || []).length;
+
+    let msg = message.content;
+
     // Add a closing code tag if there is an odd number of code tags
-    return codeTags % 2 === 0 ? message.content : message.content + "```";
+    if (codeTags % 2 !== 0) {
+      if (message.loading) {
+        msg += `▎`;
+      }
+      msg += "```";
+    } else {
+      if (message.loading) {
+        msg += `<span class="caret">▎</span>`;
+      }
+    }
+
+    return msg;
   };
 
   return (
